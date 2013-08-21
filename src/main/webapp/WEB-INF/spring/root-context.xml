@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Cloulu Backend Service Properties Bean 생성 -->
+	<bean id="clServices" class="com.cloulu.services.ClouluBackendServicesFactoryBean" />
+
+	<!-- Cloulu Backend Service Properties Bean을 참조하여 값 가지고 오기 #{clService[서비스이름.credentialsKey]}  -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://#{clServices['mysql2.host']}:#{clServices['mysql2.port']}/#{clServices['mysql2.name']}" />
+		<property name="username" value="#{clServices['mysql2.username']}" />
+		<property name="password" value="#{clServices['mysql2.password']}" />
+	</bean>
+
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:db-schema.sql" />
+	</jdbc:initialize-database>
+
+</beans>
