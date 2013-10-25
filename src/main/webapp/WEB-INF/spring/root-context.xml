@@ -12,9 +12,9 @@
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://#{clServices['mysql2.host']}:#{clServices['mysql2.port']}/#{clServices['mysql2.name']}" />
-		<property name="username" value="#{clServices['mysql2.username']}" />
-		<property name="password" value="#{clServices['mysql2.password']}" />
+			value="jdbc:mysql://#{clServices['mysql1.host']}:#{clServices['mysql1.port']}/#{clServices['mysql1.name']}" />
+		<property name="username" value="#{clServices['mysql1.username']}" />
+		<property name="password" value="#{clServices['mysql1.password']}" />
 	</bean>
 
 	<jdbc:initialize-database data-source="dataSource">
